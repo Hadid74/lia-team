@@ -24,6 +24,11 @@ By changing the .env and config/database.php files, our Laravel project is conne
 The redis server was installed on wsl.
 Instead of using phpredis as a php extension, predis was used. Our redis_client was changed to predis in .env .
 
+Then run this command to start redis server on linux(wsl).
+- **Run Redis Server:**
+    ```bash
+    sudo service redis-server start
+
 
 ## JWT CONFIG
 
