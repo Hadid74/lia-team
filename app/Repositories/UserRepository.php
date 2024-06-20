@@ -5,12 +5,18 @@ namespace App\Repositories;
 use App\Contracts\Repositories\UserRepositoryContract;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use MongoDB\Laravel\Eloquent\Model;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class UserRepository implements UserRepositoryContract
 {
 
+    public function index(): Collection
+    {
+        return User::all();
+    }
     public function create(array $payload): Model
     {
         return User::create($payload);
@@ -27,4 +33,13 @@ class UserRepository implements UserRepositoryContract
             'expires_in' => 3600 * 60
         ]);
     }
+
+    public function createAdmin(string $id):bool
+    {
+        $user = User::find($id);
+        throw_if(!$user, BadRequestException::class);
+         $user->is_admin=1;
+        return $user->save();
+    }
+
 }

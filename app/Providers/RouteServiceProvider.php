@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapDashboardRoutes(): void
     {
         Route::prefix('api/dashboard')
-            ->middleware('auth:api')
+            ->middleware(['auth:api',IsAdmin::class])
             ->group(base_path('routes/dashboard.php'));
     }
 

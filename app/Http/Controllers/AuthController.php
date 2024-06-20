@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\Repositories\UserRepositoryContract;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -29,8 +30,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-
         auth()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
+
 }

@@ -103,7 +103,7 @@ class AuthTest extends TestCase
             ->assertJsonValidationErrorFor('email');
     }
 
-    public function test_with_wrong_password()
+    public function test_login_with_wrong_password()
     {
         User::create([
             'name' => 'hadid',
@@ -118,7 +118,7 @@ class AuthTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_with_correct_credential()
+    public function test_login_with_correct_credential()
     {
         User::create([
             'name' => 'hadid',
@@ -149,5 +149,20 @@ class AuthTest extends TestCase
             ]);
         $response->assertStatus(200);
         $this->assertGuest();
+    }
+
+    public function test_access_to_dashboard_with_unauthorized_user()
+    {
+        $user = User::create([
+            'name' => 'hadid',
+            'email' => 'hadid@gmail.com',
+            'password' => 'correct_password'
+        ]);
+        $response = $this->getJson('api/dashboard/users');
+        $response->assertStatus(401);
+        $response = $this->actingAs($user)->getJson('api/dashboard/users');
+        $response->assertStatus(403);
+
+
     }
 }
